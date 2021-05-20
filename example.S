@@ -4,8 +4,8 @@ N:
 M:
 .word 2
 matrix:
-.word 1, 4, 1, -1
-.word 0, -1, -2, -3
+.word 1, 4, 1, 2
+.word 1, 2, -2, -3
 
 result:
 .word 0
@@ -43,7 +43,6 @@ process:
 add t1, a2, x0 # t1 = N
 add t2, a3, x0 # t2 = M
 
-# check positive
 check_sing:
 beq t4, x0, check_end
 addi t4,t4,-1
@@ -53,7 +52,6 @@ inc_sing:
 addi a4, a4, 4 
 addi t3, t3, 1 
 blt t3, t1, inc_sing 
-
 j check_sing
 check_end:
 
@@ -69,5 +67,8 @@ addi a4, a4, 4 # increment array pointer
 add t5, t5, t6 # count sum
 addi t3, t3, 1
 blt t3, t1, cycle
+bgtz t5,ans
+ret
+ans:
 sw t5, 0(a5) # save result 
 ret
